@@ -1,0 +1,38 @@
+"0","tripdata.sub %>% 
+  mutate(date = lubridate::as_date(started_at),
+         day = lubridate::wday(date, label=T, week_start = 1),
+         month = lubridate::month(date) %>% as.character,
+         year = lubridate::year(date) %>% as.character,
+         month = factor(month, levels = 1:12)) %>%
+  select(day, month, member_casual, year) %>%
+  count(member_casual, day, month, year) %>%
+  ggplot(aes(x=day, fill = member_casual, y = n)) +
+  geom_col(position = 'dodge') +
+  theme_bw() +
+  labs(y='Count rides', x='Day',
+       title = 'Frequency of member and casual riders across the week') +
+  scale_fill_discrete(name = 'Membership') + 
+  facet_grid(month~year) +
+  theme(axis.text.x = element_text(angle=90),
+        axis.text.y = element_text(size=6)) +
+  labs(x='Day', y='Count of rides')
+tripdata.sub %>% 
+  mutate(date = lubridate::as_date(started_at),
+         day = lubridate::wday(date, label=T, week_start = 1),
+         month = lubridate::month(date) %>% as.character,
+         year = lubridate::year(date) %>% as.character,
+         month = factor(month, levels = 1:12)) %>%
+  select(day, month, member_casual, year) %>%
+  count(member_casual, day, month, year) %>%
+  ggplot(aes(x=day, fill = member_casual, y = n)) +
+  geom_col(position = 'dodge') +
+  theme_bw() +
+  labs(y='Count rides', x='Day',
+       title = 'Frequency of member and casual riders across the week') +
+  scale_fill_discrete(name = 'Membership') + 
+  facet_grid(month~year) +
+  theme(axis.text.x = element_text(angle=90),
+        axis.text.y = element_text(size=6)) +
+  labs(x='Day', y='Count of rides')
+"
+"0","ggsave('fig_ride_week_month_year.png', height=6, width=8)"
